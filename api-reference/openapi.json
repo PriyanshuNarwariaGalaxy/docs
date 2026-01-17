@@ -1,1 +1,1008 @@
-{"openapi":"3.0.3","info":{"title":"Hackathon Galaxy API","description":"OpenAPI generated from tRPC procedures (trpc-to-openapi).","version":"0.1.0"},"servers":[{"url":"http://localhost:3000/api/openapi"}],"paths":{"/workflows":{"get":{"operationId":"workflows-list","summary":"List workflows","tags":["workflows"],"security":[{"bearerAuth":[]}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"workflows":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"updatedAt":{},"createdAt":{}},"required":["id","name"]}}},"required":["workflows"]}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}},"post":{"operationId":"workflows-create","summary":"Create workflow","tags":["workflows"],"security":[{"bearerAuth":[]}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":120},"nodes":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1},"type":{"type":"string","enum":["prompt","image","audio","video","comment","openrouter","seedance","seedream","seedvr2","eleven_v3","sync_lipsync","crop","merge_av","merge_videos","extract_audio"]},"position":{"type":"object","properties":{"x":{"type":"number"},"y":{"type":"number"}},"required":["x","y"]},"data":{}},"required":["id","type","position"],"additionalProperties":true}},"edges":{"type":"array","items":{"type":"object","properties":{"source":{"type":"string","minLength":1},"target":{"type":"string","minLength":1}},"required":["source","target"],"additionalProperties":true}}},"required":["name","nodes","edges"]}}}},"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"workflow":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"nodes":{},"edges":{},"updatedAt":{},"createdAt":{}},"required":["id","name"]}},"required":["workflow"]}}}},"400":{"description":"Invalid input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.BAD_REQUEST"}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}}},"/workflows/{id}":{"get":{"operationId":"workflows-get","summary":"Get workflow by id","tags":["workflows"],"security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"id","schema":{"type":"string","minLength":1},"required":true}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"workflow":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"nodes":{},"edges":{},"updatedAt":{},"createdAt":{}},"required":["id","name"]}},"required":["workflow"]}}}},"400":{"description":"Invalid input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.BAD_REQUEST"}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"404":{"description":"Not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.NOT_FOUND"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}},"patch":{"operationId":"workflows-update","summary":"Update workflow","tags":["workflows"],"security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"id","schema":{"type":"string","minLength":1},"required":true}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":120},"nodes":{"type":"array","items":{}},"edges":{"type":"array","items":{}}}}}}},"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"workflow":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"nodes":{},"edges":{},"updatedAt":{},"createdAt":{}},"required":["id","name"]}},"required":["workflow"]}}}},"400":{"description":"Invalid input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.BAD_REQUEST"}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"404":{"description":"Not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.NOT_FOUND"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}},"delete":{"operationId":"workflows-delete","summary":"Delete workflow","tags":["workflows"],"security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"id","schema":{"type":"string","minLength":1},"required":true}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean","enum":[true]}},"required":["ok"]}}}},"400":{"description":"Invalid input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.BAD_REQUEST"}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"404":{"description":"Not found","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.NOT_FOUND"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}}},"/workflows/{id}/duplicate":{"post":{"operationId":"workflows-duplicate","summary":"Duplicate workflow","tags":["workflows"],"security":[{"bearerAuth":[]}],"parameters":[{"in":"path","name":"id","schema":{"type":"string","minLength":1},"required":true}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"workflow":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"nodes":{},"edges":{},"updatedAt":{},"createdAt":{}},"required":["id","name"]}},"required":["workflow"]}}}},"400":{"description":"Invalid input data","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.BAD_REQUEST"}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}}},"/credits/balance":{"get":{"operationId":"credits-balance","summary":"Get current credit balance","tags":["credits"],"security":[{"bearerAuth":[]}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"balanceCredits":{"type":"number"}},"required":["balanceCredits"]}}}},"401":{"description":"Authorization not provided","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.UNAUTHORIZED"}}}},"403":{"description":"Insufficient access","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.FORBIDDEN"}}}},"500":{"description":"Internal server error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/error.INTERNAL_SERVER_ERROR"}}}}}}}},"components":{"securitySchemes":{"bearerAuth":{"type":"http","scheme":"bearer","bearerFormat":"JWT"}},"schemas":{"error.UNAUTHORIZED":{"type":"object","properties":{"message":{"type":"string","description":"The error message","example":"Authorization not provided"},"code":{"type":"string","description":"The error code","example":"UNAUTHORIZED"},"issues":{"type":"array","items":{"type":"object","properties":{"message":{"type":"string"}},"required":["message"]},"description":"An array of issues that were responsible for the error","example":[]}},"required":["message","code"],"title":"Authorization not provided error (401)","description":"The error information","example":{"code":"UNAUTHORIZED","message":"Authorization not provided","issues":[]}},"error.FORBIDDEN":{"type":"object","properties":{"message":{"type":"string","description":"The error message","example":"Insufficient access"},"code":{"type":"string","description":"The error code","example":"FORBIDDEN"},"issues":{"type":"array","items":{"type":"object","properties":{"message":{"type":"string"}},"required":["message"]},"description":"An array of issues that were responsible for the error","example":[]}},"required":["message","code"],"title":"Insufficient access error (403)","description":"The error information","example":{"code":"FORBIDDEN","message":"Insufficient access","issues":[]}},"error.INTERNAL_SERVER_ERROR":{"type":"object","properties":{"message":{"type":"string","description":"The error message","example":"Internal server error"},"code":{"type":"string","description":"The error code","example":"INTERNAL_SERVER_ERROR"},"issues":{"type":"array","items":{"type":"object","properties":{"message":{"type":"string"}},"required":["message"]},"description":"An array of issues that were responsible for the error","example":[]}},"required":["message","code"],"title":"Internal server error error (500)","description":"The error information","example":{"code":"INTERNAL_SERVER_ERROR","message":"Internal server error","issues":[]}},"error.BAD_REQUEST":{"type":"object","properties":{"message":{"type":"string","description":"The error message","example":"Invalid input data"},"code":{"type":"string","description":"The error code","example":"BAD_REQUEST"},"issues":{"type":"array","items":{"type":"object","properties":{"message":{"type":"string"}},"required":["message"]},"description":"An array of issues that were responsible for the error","example":[]}},"required":["message","code"],"title":"Invalid input data error (400)","description":"The error information","example":{"code":"BAD_REQUEST","message":"Invalid input data","issues":[]}},"error.NOT_FOUND":{"type":"object","properties":{"message":{"type":"string","description":"The error message","example":"Not found"},"code":{"type":"string","description":"The error code","example":"NOT_FOUND"},"issues":{"type":"array","items":{"type":"object","properties":{"message":{"type":"string"}},"required":["message"]},"description":"An array of issues that were responsible for the error","example":[]}},"required":["message","code"],"title":"Not found error (404)","description":"The error information","example":{"code":"NOT_FOUND","message":"Not found","issues":[]}}}}}
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Hackathon Galaxy API",
+    "description": "OpenAPI generated from tRPC procedures (trpc-to-openapi).",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://workflow-priyanshu-y2um.vercel.app/api/openapi"
+    }
+  ],
+  "paths": {
+    "/workflows": {
+      "get": {
+        "operationId": "workflows-list",
+        "summary": "List workflows",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "updatedAt": {},
+                          "createdAt": {}
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "workflows"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "workflows-create",
+        "summary": "Create workflow",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "prompt",
+                            "image",
+                            "audio",
+                            "video",
+                            "comment",
+                            "openrouter",
+                            "seedance",
+                            "seedream",
+                            "seedvr2",
+                            "eleven_v3",
+                            "sync_lipsync",
+                            "crop",
+                            "merge_av",
+                            "merge_videos",
+                            "extract_audio"
+                          ]
+                        },
+                        "position": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ]
+                        },
+                        "data": {}
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "position"
+                      ],
+                      "additionalProperties": true
+                    }
+                  },
+                  "edges": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "source",
+                        "target"
+                      ],
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "nodes",
+                  "edges"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "nodes": {},
+                        "edges": {},
+                        "updatedAt": {},
+                        "createdAt": {}
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflow"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workflows/{id}": {
+      "get": {
+        "operationId": "workflows-get",
+        "summary": "Get workflow by id",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "nodes": {},
+                        "edges": {},
+                        "updatedAt": {},
+                        "createdAt": {}
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflow"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "workflows-update",
+        "summary": "Update workflow",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "edges": {
+                    "type": "array",
+                    "items": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "nodes": {},
+                        "edges": {},
+                        "updatedAt": {},
+                        "createdAt": {}
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflow"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "workflows-delete",
+        "summary": "Delete workflow",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workflows/{id}/duplicate": {
+      "post": {
+        "operationId": "workflows-duplicate",
+        "summary": "Duplicate workflow",
+        "tags": [
+          "workflows"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "nodes": {},
+                        "edges": {},
+                        "updatedAt": {},
+                        "createdAt": {}
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflow"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credits/balance": {
+      "get": {
+        "operationId": "credits-balance",
+        "summary": "Get current credit balance",
+        "tags": [
+          "credits"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balanceCredits": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "balanceCredits"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "error.UNAUTHORIZED": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Authorization not provided"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "UNAUTHORIZED"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "title": "Authorization not provided error (401)",
+        "description": "The error information",
+        "example": {
+          "code": "UNAUTHORIZED",
+          "message": "Authorization not provided",
+          "issues": []
+        }
+      },
+      "error.FORBIDDEN": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Insufficient access"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "FORBIDDEN"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "title": "Insufficient access error (403)",
+        "description": "The error information",
+        "example": {
+          "code": "FORBIDDEN",
+          "message": "Insufficient access",
+          "issues": []
+        }
+      },
+      "error.INTERNAL_SERVER_ERROR": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Internal server error"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "INTERNAL_SERVER_ERROR"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "title": "Internal server error error (500)",
+        "description": "The error information",
+        "example": {
+          "code": "INTERNAL_SERVER_ERROR",
+          "message": "Internal server error",
+          "issues": []
+        }
+      },
+      "error.BAD_REQUEST": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Invalid input data"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "BAD_REQUEST"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "title": "Invalid input data error (400)",
+        "description": "The error information",
+        "example": {
+          "code": "BAD_REQUEST",
+          "message": "Invalid input data",
+          "issues": []
+        }
+      },
+      "error.NOT_FOUND": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Not found"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "NOT_FOUND"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ],
+        "title": "Not found error (404)",
+        "description": "The error information",
+        "example": {
+          "code": "NOT_FOUND",
+          "message": "Not found",
+          "issues": []
+        }
+      }
+    }
+  }
+}
