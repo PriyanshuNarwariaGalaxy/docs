@@ -64,6 +64,10 @@
               "api-reference/endpoint/delete",
               "api-reference/endpoint/webhook"
             ]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "https://YOUR_APP_DOMAIN/api/openapi.json"
           }
         ]
       }
